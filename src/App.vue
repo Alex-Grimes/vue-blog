@@ -1,24 +1,43 @@
 <template>
   <div class="app-wrapper">
     <div class="app">
-      <Navigation />
+      <Navigation v-if="!navigationDisabled" />
       <router-view />
+      <Footer v-if="!navigationDisabled" />
     </div>
   </div>
 </template>
 
 <script>
 import Navigation from './components/Navigation.vue';
+import Footer from './components/Footer.vue';
 export default {
   name: "app",
-  components: { Navigation },
+  components: { Navigation, Footer },
   data() {
-    return {};
+    return {
+      navigationDisabled: null,
+    };
   },
-  created() { },
+  created() {
+    this.checkRoute();
+  },
   mounted() { },
-  methods: {},
-  watch: {},
+  methods: {
+    checkRoute() {
+      if (this.$route.name === "Login" || this.$route.name === "Register" || this.$route.name === "ForgotPassword") {
+        this.navigationDisabled = true;
+        return;
+      }
+      this.navigationDisabled = false;
+
+    },
+  },
+  watch: {
+    $route() {
+      this.checkRoute();
+    }
+  },
 };
 </script>
 
@@ -52,5 +71,61 @@ export default {
 
 .link-light {
   color: #fff;
+}
+
+.arrow {
+  margin-left: 8px;
+  width: 12px;
+
+  path {
+    fill: #000;
+  }
+}
+
+.arrow-light {
+  path {
+    fill: #fff;
+  }
+}
+
+button,
+.router-button {
+  transition: 500ms ease all;
+  cursor: pointer;
+  margin-top: 24px;
+  padding: 12px 24px;
+  background-color: #303030;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  text-transform: uppercase;
+}
+
+.blog-card-wrap {
+  position: relative;
+  padding: 80px 16px;
+  background-color: #f1f1f1;
+
+  @media(min-width: 500px) {
+    padding: 100px 16px;
+  }
+
+  .blog-cards {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1fr;
+
+    @media(min-width: 500px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media(min-width: 900px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media(min-width: 1200px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
 }
 </style>
