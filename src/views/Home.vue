@@ -13,7 +13,7 @@
     <div class="updates">
       <div class="container">
         <h2>never miss a post Register for your free account today!</h2>
-        <router-link class="router-button" to="#">
+        <router-link class="router-button" :to="{ name: 'Register' }">
           Register for Vue-Blog
           <Arrow class="arrow arrow-light" />
         </router-link>
