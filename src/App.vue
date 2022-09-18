@@ -101,6 +101,12 @@ button,
   text-transform: uppercase;
 }
 
+.error {
+  text-align: center;
+  font-size: 12px;
+  color: red;
+}
+
 .blog-card-wrap {
   position: relative;
   padding: 80px 16px;

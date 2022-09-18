@@ -24,6 +24,7 @@
         </transition>
     </header>
 </template>
+
 <script>
 import menuIcon from '../assets/Icons/bars-regular.svg'
 export default {
