@@ -24,13 +24,13 @@
                         </div>
                         <div class="options">
                             <div class="option">
-                                <router-link class="option" to="#">
+                                <router-link @click="toggleProfileMenu" class="option" to='Profile'>
                                     <userIcon class="icon" />
                                     <p>Profile</p>
                                 </router-link>
                             </div>
                             <div class="option">
-                                <router-link class="option" to="#">
+                                <router-link class="option" to='Admin'>
                                     <adminIcon class="icon" />
                                     <p>Admin</p>
                                 </router-link>
