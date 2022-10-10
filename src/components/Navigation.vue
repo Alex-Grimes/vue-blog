@@ -8,7 +8,7 @@
                 <ul v-show="!mobile">
                     <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                     <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                    <router-link class="link" to="#">Create Post</router-link>
+                    <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                     <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
                 </ul>
                 <div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
@@ -29,7 +29,7 @@
                                     <p>Profile</p>
                                 </router-link>
                             </div>
-                            <div class="option">
+                            <div v-if="admin" class="option">
                                 <router-link class="option" to='Admin'>
                                     <adminIcon class="icon" />
                                     <p>Admin</p>
@@ -51,7 +51,7 @@
             <ul v-show="mobileNav" class="mobile-nav">
                 <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                 <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                <router-link class="link" to="#">Create Post</router-link>
+                <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                 <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
             </ul>
         </transition>
@@ -65,7 +65,6 @@ import adminIcon from '../assets/Icons/user-crown-light.svg'
 import signOutIcon from '../assets/Icons/sign-out-alt-regular.svg'
 import firebase from 'firebase/app';
 import "firebase/auth";
-
 export default {
     name: 'navigation',
     components: {
@@ -73,7 +72,6 @@ export default {
         userIcon,
         adminIcon,
         signOutIcon,
-
     },
     data() {
         return {
@@ -114,6 +112,9 @@ export default {
     computed: {
         user() {
             return this.$store.state.user;
+        },
+        admin() {
+            return this.$store.state.profileAdmin;
         },
     },
 };
