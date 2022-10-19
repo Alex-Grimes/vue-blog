@@ -4,16 +4,13 @@ import firebase from "firebase/app"
 import "firebase/auth";
 import db from "../firebase/firebaseInit";
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    sampleBlogCards: [
-      { blogTitle: "Blog Card #1", blogCoverPhoto: "stock-1", blogDate: "June 3, 2022" },
-      { blogTitle: "Blog Card #2", blogCoverPhoto: "stock-2", blogDate: "June 3, 2022" },
-      { blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "June 3, 2022" },
-      { blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "June 3, 2022" },
-    ],
+    blogPosts: [],
+    postLoaded: null,
     blogHTML: "Write your blog title here...",
     blogTitle:"",
     blogPhotoName: "",
@@ -29,7 +26,18 @@ export default new Vuex.Store({
     profileId: null,
     profileInitials: null,
   },
+  getters:{
+    blogPostsFeed(state){
+      return state.blogPosts.slice(0, 2);
+    },
+    blogPostsCards(state){
+      return state.blogPosts.slice(2,6);
+    }
+  },
   mutations: {
+    openPhotoPreview(state){
+      state.blogPhotoPreview = !state.blogPhotoPreview
+    },
     newBlogPost(state,payload) {
       state.blogHTML = payload;
     },
@@ -85,7 +93,24 @@ export default new Vuex.Store({
       const admin = await token.claims.admin;
       commit('setProfileAdmin',admin);
     },
-
+    async getPost({ state }) {
+      const dataBase = await db.collection("blogPosts").orderBy("date", "desc");
+      const dbResults = await dataBase.get();
+      dbResults.forEach((doc) => {
+        if (!state.blogPosts.some((post) => post.blogId === doc.id)) {
+          const data = {
+            blogId: doc.data().blogId,
+            blogHTML: doc.data().blogHTML,
+            blogCoverPhoto: doc.data().blogCoverPhoto,
+            blogTitle: doc.data().blogTitle,
+            blogDate: doc.data().date,
+            blogCoverPhotoName: doc.data().blogCoverPhotoName,
+          };
+          state.blogPosts.push(data);
+        }
+      });
+      state.postLoaded = true;
+    },
     async updateUserSettings({commit, state}) {
       const dataBase = await db.collection('users').doc(state.profileId);
       await dataBase.update({
