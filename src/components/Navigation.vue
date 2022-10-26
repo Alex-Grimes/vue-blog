@@ -14,7 +14,7 @@
                 <div v-if="user" :class="{ 'mobile-user-menu': mobile }" @click="toggleProfileMenu" class="profile"
                     ref="profile">
                     <span>{{ this.$store.state.profileInitials }}</span>
-                    <div v-show="profileMenu" class="profile-menu">
+                    <div v-show="profileMenu" class="profile-menu" v-click-outside="toggleProfileMenu">
                         <div class="info">
                             <p class="initials">{{ this.$store.state.profileInitials }}</p>
                             <div class="right">
@@ -50,10 +50,14 @@
         <menuIcon @click="toggleMobileNav" class="menu-icon" v-show="mobile" />
         <transition name="mobile-nav">
             <ul v-show="mobileNav" class="mobile-nav">
-                <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
-                <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
-                <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
+                <router-link class="link" @click.native="toggleMobileNav" :to="{ name: 'Home' }">Home</router-link>
+                <router-link class="link" @click.native="toggleMobileNav" :to="{ name: 'Blogs' }">Blogs</router-link>
+                <router-link v-if="admin" class="link" @click.native="toggleMobileNav" :to="{ name: 'CreatePost' }">
+                    Create Post
+                </router-link>
+                <router-link v-if="!user" class="link" @click.native="toggleMobileNav" :to="{ name: 'Login' }">
+                    Login/Register
+                </router-link>
             </ul>
         </transition>
     </header>
