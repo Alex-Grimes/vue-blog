@@ -11,7 +11,8 @@
                     <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                     <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
                 </ul>
-                <div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
+                <div v-if="user" :class="{ 'mobile-user-menu': mobile }" @click="toggleProfileMenu" class="profile"
+                    ref="profile">
                     <span>{{ this.$store.state.profileInitials }}</span>
                     <div v-show="profileMenu" class="profile-menu">
                         <div class="info">
@@ -24,19 +25,19 @@
                         </div>
                         <div class="options">
                             <div class="option">
-                                <router-link @click="toggleProfileMenu" class="option" to='Profile'>
+                                <router-link class="option" :to="{ name: 'Profile' }">
                                     <userIcon class="icon" />
                                     <p>Profile</p>
                                 </router-link>
                             </div>
                             <div v-if="admin" class="option">
-                                <router-link class="option" to='Admin'>
+                                <router-link class="option" :to="{ name: 'Admin' }">
                                     <adminIcon class="icon" />
                                     <p>Admin</p>
                                 </router-link>
                             </div>
                             <div class="option">
-                                <div @click="signOut" class="option" to="#">
+                                <div @click="signOut" class="option">
                                     <signOutIcon class="icon" />
                                     <p>Sign Out</p>
                                 </div>
@@ -94,6 +95,7 @@ export default {
             }
             this.mobile = false;
             this.mobileNav = false;
+            return;
         },
         toggleMobileNav() {
             this.mobileNav = !this.mobileNav
@@ -258,6 +260,10 @@ header {
                     }
                 }
             }
+        }
+
+        .mobile-user-menu {
+            margin-right: 40px;
         }
     }
 
