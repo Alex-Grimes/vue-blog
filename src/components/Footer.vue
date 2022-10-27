@@ -3,11 +3,12 @@
         <div class="container">
             <div class="left">
                 <div class="col-1">
-                    <router-link class="header" :to="{ name: 'Home' }">Code Gremlin</router-link>
+                    <router-link class="header" :to="{ name: 'Home' }">Code Gremlin
+                    </router-link>
                     <ul>
                         <li>
-                            <a href="#">
-                                <youtube class="svg-icon" />
+                            <a href="https://github.com/Alex-Grimes" target="_blank">
+                                <github class="svg-icon github" />
                             </a>
                         </li>
                         <!-- <li>
@@ -21,7 +22,7 @@
                             </a>
                         </li> -->
                         <li>
-                            <a href="https://www.linkedin.com/in/agrimes-sc/">
+                            <a href="https://www.linkedin.com/in/agrimes-sc/" target="_blank">
                                 <linkedin class="svg-icon" />
                             </a>
                         </li>
@@ -44,16 +45,17 @@
 </template>
 
 <script>
-import youtube from "../assets/Icons/youtube-brands.svg"
+import github from "../assets/Icons/github.svg"
 //import twitter from "../assets/Icons/twitter-brands.svg"
 //import instagram from "../assets/Icons/instagram-brands.svg"
 import linkedin from "../assets/Icons/linkedin-brands.svg"
 export default {
     name: "footer-vue",
     components: {
-        youtube,
+        //youtube,
         //twitter,
         //instagram,
+        github,
         linkedin,
     },
     computed: {
@@ -153,6 +155,10 @@ footer {
                             width: 24px;
                             height: auto;
                             color: #fff;
+                        }
+
+                        .github {
+                            fill: #fff;
                         }
                     }
                 }
