@@ -24,14 +24,14 @@
                             </div>
                         </div>
                         <div class="options">
-                            <div class="option">
-                                <router-link class="option" :to="{ name: 'Profile' }">
+                            <div class="option" @click.native="toggleProfileMenu">
+                                <router-link ref="profile" class="option" :to="{ name: 'Profile' }">
                                     <userIcon class="icon" />
                                     <p>Profile</p>
                                 </router-link>
                             </div>
-                            <div v-if="admin" class="option">
-                                <router-link class="option" :to="{ name: 'Admin' }">
+                            <div v-if="admin" class="option" @click.native="toggleProfileMenu">
+                                <router-link ref="profile" class="option" :to="{ name: 'Admin' }">
                                     <adminIcon class="icon" />
                                     <p>Admin</p>
                                 </router-link>
@@ -104,11 +104,8 @@ export default {
         toggleMobileNav() {
             this.mobileNav = !this.mobileNav
         },
-        toggleProfileMenu(e) {
-            if (e.target === this.$refs.profile) {
-                this.profileMenu = !this.profileMenu;
-            }
-
+        toggleProfileMenu() {
+            this.profileMenu = !this.profileMenu;
         },
         signOut() {
             firebase.auth().signOut();
