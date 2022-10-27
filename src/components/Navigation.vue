@@ -2,7 +2,7 @@
     <header>
         <nav class="container">
             <div class="branding">
-                <router-link class="header" :to="{ name: 'Home' }">Vue-Blog</router-link>
+                <router-link class="header" :to="{ name: 'Home' }">Code Gremlin</router-link>
             </div>
             <div class="nav-links">
                 <ul v-show="!mobile">
@@ -11,9 +11,10 @@
                     <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                     <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
                 </ul>
-                <div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
+                <div v-if="user" :class="{ 'mobile-user-menu': mobile }" @click="toggleProfileMenu" class="profile"
+                    ref="profile">
                     <span>{{ this.$store.state.profileInitials }}</span>
-                    <div v-show="profileMenu" class="profile-menu">
+                    <div v-show="profileMenu" class="profile-menu" v-click-outside="toggleProfileMenu">
                         <div class="info">
                             <p class="initials">{{ this.$store.state.profileInitials }}</p>
                             <div class="right">
@@ -23,20 +24,20 @@
                             </div>
                         </div>
                         <div class="options">
-                            <div class="option">
-                                <router-link @click="toggleProfileMenu" class="option" to='Profile'>
+                            <div class="option" @click.native="toggleProfileMenu">
+                                <router-link ref="profile" class="option" :to="{ name: 'Profile' }">
                                     <userIcon class="icon" />
                                     <p>Profile</p>
                                 </router-link>
                             </div>
-                            <div v-if="admin" class="option">
-                                <router-link class="option" to='Admin'>
+                            <div v-if="admin" class="option" @click.native="toggleProfileMenu">
+                                <router-link ref="profile" class="option" :to="{ name: 'Admin' }">
                                     <adminIcon class="icon" />
                                     <p>Admin</p>
                                 </router-link>
                             </div>
                             <div class="option">
-                                <div @click="signOut" class="option" to="#">
+                                <div @click="signOut" class="option">
                                     <signOutIcon class="icon" />
                                     <p>Sign Out</p>
                                 </div>
@@ -49,10 +50,14 @@
         <menuIcon @click="toggleMobileNav" class="menu-icon" v-show="mobile" />
         <transition name="mobile-nav">
             <ul v-show="mobileNav" class="mobile-nav">
-                <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
-                <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
-                <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login/Register</router-link>
+                <router-link class="link" @click.native="toggleMobileNav" :to="{ name: 'Home' }">Home</router-link>
+                <router-link class="link" @click.native="toggleMobileNav" :to="{ name: 'Blogs' }">Blogs</router-link>
+                <router-link v-if="admin" class="link" @click.native="toggleMobileNav" :to="{ name: 'CreatePost' }">
+                    Create Post
+                </router-link>
+                <router-link v-if="!user" class="link" @click.native="toggleMobileNav" :to="{ name: 'Login' }">
+                    Login/Register
+                </router-link>
             </ul>
         </transition>
     </header>
@@ -94,15 +99,13 @@ export default {
             }
             this.mobile = false;
             this.mobileNav = false;
+            return;
         },
         toggleMobileNav() {
             this.mobileNav = !this.mobileNav
         },
-        toggleProfileMenu(e) {
-            if (e.target === this.$refs.profile) {
-                this.profileMenu = !this.profileMenu;
-            }
-
+        toggleProfileMenu() {
+            this.profileMenu = !this.profileMenu;
         },
         signOut() {
             firebase.auth().signOut();
@@ -258,6 +261,10 @@ header {
                     }
                 }
             }
+        }
+
+        .mobile-user-menu {
+            margin-right: 40px;
         }
     }
 
