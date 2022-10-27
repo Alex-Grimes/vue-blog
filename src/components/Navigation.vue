@@ -2,7 +2,7 @@
     <header>
         <nav class="container">
             <div class="branding">
-                <router-link class="header" :to="{ name: 'Home' }">Vue-Blog</router-link>
+                <router-link class="header" :to="{ name: 'Home' }">Code Gremlin</router-link>
             </div>
             <div class="nav-links">
                 <ul v-show="!mobile">

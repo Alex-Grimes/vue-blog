@@ -3,14 +3,14 @@
         <div class="container">
             <div class="left">
                 <div class="col-1">
-                    <router-link class="header" :to="{ name: 'home' }">Vue-Blog</router-link>
+                    <router-link class="header" :to="{ name: 'Home' }">Code Gremlin</router-link>
                     <ul>
                         <li>
                             <a href="#">
                                 <youtube class="svg-icon" />
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#">
                                 <twitter class="svg-icon" />
                             </a>
@@ -19,9 +19,9 @@
                             <a href="#">
                                 <instagram class="svg-icon" />
                             </a>
-                        </li>
+                        </li> -->
                         <li>
-                            <a href="#">
+                            <a href="https://www.linkedin.com/in/agrimes-sc/">
                                 <linkedin class="svg-icon" />
                             </a>
                         </li>
@@ -29,10 +29,10 @@
                 </div>
                 <div class="col-2">
                     <ul>
-                        <router-link class="link" :to="{ name: 'home' }">Home</router-link>
-                        <router-link class="link" :to="{ name: 'blogs' }">Blogs</router-link>
-                        <router-link v-if="admin" class="link" :to="{ name: 'newpost' }">CreatePost</router-link>
-                        <router-link v-if="!user" class="link" :to="{ name: 'login' }">Login / Register</router-link>
+                        <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
+                        <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
+                        <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">CreatePost</router-link>
+                        <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login / Register</router-link>
                     </ul>
                 </div>
             </div>
@@ -45,25 +45,25 @@
 
 <script>
 import youtube from "../assets/Icons/youtube-brands.svg"
-import twitter from "../assets/Icons/twitter-brands.svg"
-import instagram from "../assets/Icons/instagram-brands.svg"
+//import twitter from "../assets/Icons/twitter-brands.svg"
+//import instagram from "../assets/Icons/instagram-brands.svg"
 import linkedin from "../assets/Icons/linkedin-brands.svg"
 export default {
     name: "footer-vue",
-          components: {
-          youtube,
-            twitter,
-              instagram,
-            linkedin,
-      },
-      computed: {
-            user() {
-                  return this.$store.state.user;
-              },
-                admin() {
-                   return this.$store.state.profileAdmin;
-            },
+    components: {
+        youtube,
+        //twitter,
+        //instagram,
+        linkedin,
+    },
+    computed: {
+        user() {
+            return this.$store.state.user;
         },
+        admin() {
+            return this.$store.state.profileAdmin;
+        },
+    },
 };
 </script>
 
