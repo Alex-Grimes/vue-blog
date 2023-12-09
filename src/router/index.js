@@ -130,7 +130,7 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, form, next) => {
+router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} | Vue-Blog`;
   next();
 });
